@@ -1,0 +1,39 @@
+{
+  "name": "kfu-health",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "server": "node create_db.js && npm run dev",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@carbon/react": "^1.64.0",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
+    "@types/bcrypt": "^5.0.2",
+    "@types/carbon-components-react": "^7.55.13",
+    "@types/cookie": "^0.6.0",
+    "@types/next-auth": "^3.15.0",
+    "bcrypt": "^5.1.1",
+    "carbon-components-react": "^8.64.0",
+    "cookie": "^0.6.0",
+    "next": "14.0.3",
+    "next-auth": "^4.24.7",
+    "next-cookie": "^2.8.0",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3",
+    "typescript": "^5"
+  }
+}
