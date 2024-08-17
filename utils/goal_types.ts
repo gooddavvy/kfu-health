@@ -4,9 +4,9 @@ export let GoalTypes: string[] = [
     "Workout Frequency - Goal for the number of workout sessions per week.",
     "Steps per day - A daily step goal.",
     "Weight Training - Target for weightlifting.",
-    "Push-up Training - Target for push-ups.",
-    "Pull-up Training - Target for pull-ups.",
-    "Sit-up Training - Target for sit-ups.",
+    "Push-up Training - Target for the maximum number of push-ups.",
+    "Pull-up Training - Target for the maximum number of pull-ups.",
+    "Sit-up Training - Target for the maximum number of sit-ups.",
     "Sleep Hours - Goal for hours of sleep per night.",
     "Water Intake - Daily goal for water consumption.",
 ];

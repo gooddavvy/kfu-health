@@ -5,7 +5,7 @@ import {
   DatePickerInput,
   Button as CarbonButton,
 } from "@carbon/react";
-import { getProfileInfo, updateProfileInfo } from "@/utils/profile_api";
+import { getProfileInfo, updateProfileInfo } from "../../../utils/profile_api";
 import { Property } from "csstype";
 
 export let isPastDate = (dateString1: string, dateString2: string): boolean => {
@@ -15,16 +15,16 @@ export let isPastDate = (dateString1: string, dateString2: string): boolean => {
   return date1 < date2;
 };
 
-let addNewGoal = (thisDeadline: string, thisWeight: string, cw: string) => {
+let addNewGoal = (thisDeadline: string, thisMax: string, cmp: string) => {
   getProfileInfo()
     .then((profileInfo) => {
       profileInfo.goals.push({
-        type: "Weight Loss",
+        type: "Pushup Training",
         startDate: new Date().toLocaleDateString(),
         deadline: thisDeadline,
-        initialWeight: cw,
-        targetWeight: thisWeight,
-        currentWeight: cw,
+        initialMaxPushups: cmp,
+        targetMaxPushups: thisMax,
+        currentMaxPushups: cmp,
         active: !isPastDate(thisDeadline, new Date().toLocaleDateString()),
       });
 
@@ -38,10 +38,10 @@ let addNewGoal = (thisDeadline: string, thisWeight: string, cw: string) => {
     });
 };
 
-let WeightLoss: React.FC = () => {
+let MaxPushups: React.FC = () => {
   let [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  let [weight, setWeight] = useState<string>("");
-  let [cw, setCw] = useState<string>("");
+  let [max, setMax] = useState<string>("");
+  let [cmp, setCmp] = useState<string>("");
   let [input, setInput] = useState(
     (
       <DatePickerInput
@@ -93,41 +93,41 @@ let WeightLoss: React.FC = () => {
             {input}
           </DatePicker>
           <TextField
-            label="Target weight (lbs)"
+            label="Target maximum pushup value"
             variant="outlined"
             fullWidth
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
+            value={max}
+            onChange={(e) => setMax(e.target.value)}
             sx={{
               marginTop: "20px",
             }}
           />
           <TextField
-            label="Current weight (lbs)"
+            label="Current maximum pushup value"
             variant="outlined"
             fullWidth
-            value={cw}
-            onChange={(e) => setCw(e.target.value)}
+            value={cmp}
+            onChange={(e) => setCmp(e.target.value)}
             sx={{
               marginTop: "20px",
             }}
           />
           <CarbonButton
-            disabled={selectedDate === null || weight === ""}
+            disabled={selectedDate === null || max === ""}
             onClick={() => {
-              if (selectedDate && weight !== "") {
+              if (selectedDate && max !== "") {
                 let thisDeadline = selectedDate.toLocaleDateString();
-                let thisWeight = weight;
-                addNewGoal(thisDeadline, thisWeight, cw);
+                let thisWeight = max;
+                addNewGoal(thisDeadline, thisWeight, cmp);
               }
 
               setInput(<></>);
               setSelectedDate(null);
-              setWeight(""); // Clear the weight input
+              setMax(""); // Clear the weight input
               handleClose(); // Close the modal after submitting the goal
 
               alert(
-                "Weight loss goal has been successfully added. Please refresh the page for up-to-date information."
+                "Maximum pushup goal has been successfully added. Please refresh the page for up-to-date information."
               );
             }}
             style={{
@@ -142,4 +142,4 @@ let WeightLoss: React.FC = () => {
   );
 };
 
-export default WeightLoss;
+export default MaxPushups;

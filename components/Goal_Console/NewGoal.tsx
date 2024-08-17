@@ -6,6 +6,7 @@ import { Dropdown } from "@carbon/react";
 import type { OnChangeData } from "carbon-components-react";
 import { GoalTypes } from "@/utils/goal_types";
 import WeightLoss from "./NewGoal/WeightLoss";
+import MaxPushups from "./NewGoal/MaxPushups";
 
 const NewGoal: React.FC = ({ sx }: any) => {
   let [goal, setGoal] = useState(null);
@@ -53,6 +54,10 @@ const NewGoal: React.FC = ({ sx }: any) => {
         {goal ===
           "Weight Loss - Target weight to reach by a specific date." && (
           <WeightLoss />
+        )}
+        {goal ===
+          "Push-up Training - Target for the maximum number of push-ups." && (
+          <MaxPushups />
         )}
 
         <h4 style={{ marginTop: "1%" }}>Discipline equals freedom!</h4>
