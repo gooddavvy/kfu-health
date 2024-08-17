@@ -5,6 +5,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { getProfileInfo } from "@/utils/profile_api";
 import NewGoal from "@/components/Goal_Console/NewGoal";
+import ActiveGoals from "@/components/Goal_Console/ActiveGoals";
 
 export default function Home() {
   //   const cookieStore = cookies();
@@ -38,6 +39,16 @@ export default function Home() {
         }}
       >
         <NewGoal />
+      </section>
+      <section
+        style={{
+          justifyContent: "center",
+          //   textAlign: "center",
+          borderBottom: "100px",
+          //   border: "3px solid lightgray",
+        }}
+      >
+        <ActiveGoals />
       </section>
     </main>
   );

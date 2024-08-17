@@ -8,16 +8,27 @@ import {
 import { getProfileInfo, updateProfileInfo } from "@/utils/profile_api";
 import { Property } from "csstype";
 
-let addNewGoal = (thisDeadline: string, thisWeight: string) => {
+let isPastDate = (dateString1: string, dateString2: string): boolean => {
+  const date1 = new Date(dateString1);
+  const date2 = new Date(dateString2);
+
+  return date1 < date2;
+};
+
+let addNewGoal = (thisDeadline: string, thisWeight: string, cw: string) => {
   getProfileInfo()
     .then((profileInfo) => {
       profileInfo.goals.push({
         type: "Weight Loss",
+        startDate: new Date().toLocaleDateString(),
         deadline: thisDeadline,
+        initialWeight: cw,
         targetWeight: thisWeight,
+        currentWeight: cw,
+        active: !isPastDate(thisDeadline, new Date().toLocaleDateString()),
       });
 
-      return updateProfileInfo(profileInfo);
+      updateProfileInfo(profileInfo);
     })
     .then(() => {
       console.log("New goal added successfully.");
@@ -30,6 +41,7 @@ let addNewGoal = (thisDeadline: string, thisWeight: string) => {
 let WeightLoss: React.FC = () => {
   let [selectedDate, setSelectedDate] = useState<Date | null>(null);
   let [weight, setWeight] = useState<string>("");
+  let [cw, setCw] = useState<string>("");
   let [input, setInput] = useState(
     (
       <DatePickerInput
@@ -90,13 +102,23 @@ let WeightLoss: React.FC = () => {
               marginTop: "20px",
             }}
           />
+          <TextField
+            label="Current weight (lbs)"
+            variant="outlined"
+            fullWidth
+            value={cw}
+            onChange={(e) => setCw(e.target.value)}
+            sx={{
+              marginTop: "20px",
+            }}
+          />
           <CarbonButton
             disabled={selectedDate === null || weight === ""}
             onClick={() => {
               if (selectedDate && weight !== "") {
                 let thisDeadline = selectedDate.toLocaleDateString();
                 let thisWeight = weight;
-                addNewGoal(thisDeadline, thisWeight);
+                addNewGoal(thisDeadline, thisWeight, cw);
               }
 
               setInput(<></>);

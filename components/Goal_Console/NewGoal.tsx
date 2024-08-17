@@ -19,6 +19,13 @@ const NewGoal: React.FC = ({ sx }: any) => {
         borderRadius: "5px !important",
         borderWidth: "2px !important",
         marginTop: "1%",
+        maxWidth: 345,
+        minWidth: 459.999999999999999999999999,
+        alignItems: "center",
+        justifyContent: "center",
+        alignSelf: "center" /* 
+        marginLeft: "40%",
+        marginRight: "10%", */,
       }}
     >
       <h2>Create a Goal</h2>
