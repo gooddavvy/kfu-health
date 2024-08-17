@@ -19,6 +19,14 @@ export function removeElementAtIndex<T>(array: T[], index: number): T[] {
   return array;
 }
 
+export let notify = (message: Object, profileI: any) => {
+  profileI.notifications.push(message);
+
+  updateProfileInfo(profileI)
+    .then(() => console.log("Successfully notified"))
+    .catch((error) => console.error("Error notifying:", error));
+};
+
 const ActiveGoals: React.FC = ({ sx }: any) => {
   const [box, setBox] = useState(
     <Box>
@@ -110,6 +118,47 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                 let failing =
                   isPastDate(goal.deadline, goal.startDate) ||
                   (progress === 0 && isPastDate(goal.deadline, goal.startDate));
+                let progressLevel = (theProgress: number): string => {
+                  if (theProgress < 50) {
+                    return "Low";
+                  } else if (theProgress < 75) {
+                    return "Medium";
+                  } else if (theProgress <= 100) {
+                    return "High";
+                  }
+
+                  return "";
+                };
+                let level = progressLevel(progress);
+                let progressColor = `${level === "Low" && "red"}${
+                  level === "Medium" && "yellow"
+                }${level === "High" && "green"}`
+                  .replace("false", "")
+                  .replace("false", "");
+
+                if (progress === 100 && failing === false) {
+                  let notification = {
+                    message: "You did it! You achieved your goal!",
+                    details: `Congratulations, ${profileInfo.username}! You have successfully achieved your ${goal.type} goal!`,
+                    dateAndTime: {
+                      date: new Date().toLocaleDateString(),
+                      time: new Date().toLocaleTimeString(),
+                    },
+                    goal,
+                    colorExpression: "lightgreen",
+                  };
+                  let shouldNotify = true;
+
+                  console.log(profileInfo);
+                  profileInfo.notifications.forEach((notification_: any) => {
+                    // console.log(notification_.goal === notification.goal);
+                    if (notification_.goal === notification.goal) {
+                      shouldNotify = false;
+                    }
+                  });
+
+                  if (shouldNotify) notify(notification, profileInfo);
+                }
 
                 return (
                   <div
@@ -120,7 +169,7 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                       borderRadius: "12px",
                       padding: "10px",
                       margin: "10px 0",
-                      backgroundColor: failing ? "#f8d7da" : "inherit", // Light red background when empty
+                      backgroundColor: failing ? "#f8d7da" : "inherit", // Light red background when failed/failing
                     }}
                   >
                     <Box
@@ -130,10 +179,20 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                         display: "grid",
                       }}
                     >
+                      <p
+                        style={{
+                          fontSize: "100%",
+                          color: `${progressColor}`,
+                        }}
+                      >
+                        Progress: {progress.toFixed(2)}% (Progress Level:{" "}
+                        {level})
+                      </p>
                       <ProgressBar
-                        label={`Progress: ${progress.toFixed(2)}%`}
+                        label=""
                         value={progress}
                         max={100}
+                        status="active"
                       />
                     </Box>
                     {progress === 0 && (
@@ -155,7 +214,10 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                           marginTop: "5px",
                         }}
                       >
-                        <p>You did it! You achieved your goal!</p>
+                        <p>
+                          You did it! You achieved your goal! Please delete the
+                          goal now.
+                        </p>
                       </Box>
                     )}
                     {failing && (
@@ -166,7 +228,7 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                           marginTop: "5px",
                         }}
                       >
-                        <p>Oh no, you're failing this goal!</p>
+                        <p>Oh no, you failed this goal!</p>
                       </Box>
                     )}
                     <Box style={{ marginTop: "2%" }}>
@@ -188,13 +250,13 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                           goal.targetWeight && (
                             <Box>
                               <p>
-                                <b>Initial Weight:</b> {goal.initialWeight}
+                                <b>Initial Weight:</b> {goal.initialWeight} lb
                               </p>
                               <p>
-                                <b>Current Weight:</b> {goal.currentWeight}
+                                <b>Current Weight:</b> {goal.currentWeight} lb
                               </p>
                               <p>
-                                <b>Target Weight:</b> {goal.targetWeight}
+                                <b>Target Weight:</b> {goal.targetWeight} lb
                               </p>
                             </Box>
                           )}
@@ -263,10 +325,10 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                           );
                           if (sureToDelete?.toLowerCase() === "y") {
                             handleDelete(index);
+                            alert(
+                              "Deleted. Please refresh the page for up-to-date information."
+                            );
                           }
-                          alert(
-                            "Deleted. Please refresh the page for up-to-date information."
-                          );
                         }}
                         color="secondary"
                         aria-label="delete"

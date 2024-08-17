@@ -21,7 +21,7 @@ const NewGoal: React.FC = ({ sx }: any) => {
         borderWidth: "2px !important",
         marginTop: "1%",
         maxWidth: 345,
-        minWidth: 459.999999999999999999999999,
+        minWidth: 435,
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "center" /* 

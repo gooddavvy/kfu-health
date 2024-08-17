@@ -83,7 +83,7 @@ let WeightLoss: React.FC = () => {
           }}
         >
           <Typography variant="h6" component="h2" mb={2}>
-            Set a Goal
+            Set a realistic goal you can achieve in steps.
           </Typography>
           <DatePicker
             dateFormat="m/d/Y"
@@ -134,7 +134,7 @@ let WeightLoss: React.FC = () => {
               marginTop: "20px",
             }}
           >
-            Complete
+            Set Goal
           </CarbonButton>
         </Box>
       </Modal>

@@ -1,0 +1,36 @@
+.ntf-banner {
+    color: #fff !important;
+    width: 100% !important;
+}
+
+.ntf-banner * {
+    justify-self: right !important;
+    align-self: right !important;
+    size-adjust: right !important;
+}
+
+.ntf-banner.green {
+    background-color: darkgreen !important;
+    color: #fff !important;
+}
+
+.ntf-banner.red {
+    background-color: red !important;
+    color: #fff !important;
+}
+
+.ntf-banner.yellow {
+    background-color: yellow !important;
+    color: #fff !important;
+}
+
+.ntf-banner.blue {
+    background-color: blue !important;
+    color: #fff !important;
+}
+
+.ntf-banner.hidden {
+    overflow: hidden !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}

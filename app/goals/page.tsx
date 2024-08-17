@@ -7,7 +7,7 @@ import { getProfileInfo } from "@/utils/profile_api";
 import NewGoal from "@/components/Goal_Console/NewGoal";
 import ActiveGoals from "@/components/Goal_Console/ActiveGoals";
 
-export default function Home() {
+export default function Goals() {
   //   const cookieStore = cookies();
   //   const authToken = cookieStore.get("auth")?.value;
   const [username, setUsername] = React.useState("");
