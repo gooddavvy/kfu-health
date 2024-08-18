@@ -126,9 +126,11 @@ let MaxPushups: React.FC = () => {
               setMax(""); // Clear the max input
               handleClose(); // Close the modal after submitting the goal
 
-              alert(
-                "Maximum pushup goal has been successfully added. Please refresh the page for up-to-date information."
-              );
+              setTimeout(() => {
+                if (typeof window !== "undefined") {
+                  window.location.href = window.location.href; // Trigger full reload
+                }
+              }, 1000);
             }}
             style={{
               marginTop: "20px",
@@ -136,6 +138,13 @@ let MaxPushups: React.FC = () => {
           >
             Set Goal
           </CarbonButton>
+          <Typography
+            sx={{ /* color: "gray", */ marginTop: "20px" }}
+            component="h4"
+          >
+            <b>Note:</b> If today is past the deadline you choose, this goal
+            will not be added to the Active Goals list.
+          </Typography>
         </Box>
       </Modal>
     </div>

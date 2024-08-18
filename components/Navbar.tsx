@@ -57,18 +57,18 @@ const Navbar: React.FC = ({ sx }: any) => {
             open={open}
             onClose={handleMenuClose}
           >
-            <MenuItem onClick={handleMenuClose}>
-              <Link href="/">Home</Link>
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-              <Link href="/goals">Goals</Link>
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-              <Link href="/workouts">Workouts</Link>
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-              <Link href="/profile">Profile & Settings</Link>
-            </MenuItem>
+            <a href="/">
+              <MenuItem onClick={handleMenuClose}>Home</MenuItem>
+            </a>
+            <a href="/goals">
+              <MenuItem onClick={handleMenuClose}>Goals</MenuItem>
+            </a>
+            <a href="/workouts">
+              <MenuItem onClick={handleMenuClose}>Workouts</MenuItem>
+            </a>
+            <a href="/profile">
+              <MenuItem onClick={handleMenuClose}>Profile & Settings</MenuItem>
+            </a>
           </Menu>
         </Toolbar>
       </AppBar>

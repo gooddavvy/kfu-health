@@ -9,6 +9,7 @@ import { ProgressBar } from "@carbon/react";
 import { Property } from "csstype";
 import { getProfileInfo, updateProfileInfo } from "../../utils/profile_api";
 import { isPastDate } from "./NewGoal/WeightLoss";
+import isNearDeadline from "../../utils/is_near_deadline";
 
 export function removeElementAtIndex<T>(array: T[], index: number): T[] {
   if (index > -1 && index < array.length) {
@@ -87,7 +88,7 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
           removeElementAtIndex(profileI.goals, index);
 
           updateProfileInfo(profileI)
-            .then(() => console.log("Successfully edited"))
+            .then(() => console.log("Successfully deleted"))
             .catch((error) => console.error(error));
         };
 
@@ -115,6 +116,7 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                   goal.currentWeight || goal.currentMaxPushups,
                   goal.targetWeight || goal.targetMaxPushups
                 );
+                let deadlineIsNear = isNearDeadline(new Date(goal.deadline));
                 let failing =
                   isPastDate(goal.deadline, goal.startDate) ||
                   (progress === 0 && isPastDate(goal.deadline, goal.startDate));
@@ -131,7 +133,7 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                 };
                 let level = progressLevel(progress);
                 let progressColor = `${level === "Low" && "red"}${
-                  level === "Medium" && "yellow"
+                  level === "Medium" && "blue"
                 }${level === "High" && "green"}`
                   .replace("false", "")
                   .replace("false", "");
@@ -217,6 +219,21 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                         <p>
                           You did it! You achieved your goal! Please delete the
                           goal now.
+                        </p>
+                      </Box>
+                    )}
+                    {deadlineIsNear && progress !== 100 && (
+                      <Box
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          marginTop: "5px",
+                        }}
+                      >
+                        <p>
+                          <b>
+                            <i>Deadline approaching soon.</i>
+                          </b>
                         </p>
                       </Box>
                     )}
@@ -309,9 +326,11 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                           }
 
                           handleEdit(index, newGoal);
-                          alert(
-                            "Please refresh the page for up-to-date results."
-                          );
+                          setTimeout(() => {
+                            if (typeof window !== "undefined") {
+                              window.location.href = window.location.href; // Trigger full reload
+                            }
+                          }, 1000);
                         }}
                         color="primary"
                         aria-label="edit"
@@ -325,9 +344,11 @@ const ActiveGoals: React.FC = ({ sx }: any) => {
                           );
                           if (sureToDelete?.toLowerCase() === "y") {
                             handleDelete(index);
-                            alert(
-                              "Deleted. Please refresh the page for up-to-date information."
-                            );
+                            setTimeout(() => {
+                              if (typeof window !== "undefined") {
+                                window.location.href = window.location.href; // Trigger full reload
+                              }
+                            }, 1000);
                           }
                         }}
                         color="secondary"

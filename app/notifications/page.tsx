@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { cookies } from "next/headers";
-import { Box, CircularProgress } from "@mui/material";
-import { redirect } from "next/navigation";
-import Link from "next/link";
+import { Box, CircularProgress, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Property } from "csstype";
-import { getProfileInfo } from "../../utils/profile_api";
+import { getProfileInfo, updateProfileInfo } from "../../utils/profile_api";
+import { removeElementAtIndex } from "../../components/Goal_Console/ActiveGoals";
 
 export default function Notifications() {
   //   const cookieStore = cookies();
@@ -36,7 +36,7 @@ export default function Notifications() {
 
       notifications = notifications.slice().reverse();
 
-      setUsername(profileUsername);
+      setUsername(", " + profileUsername);
       if (notifications.length === 0) {
         setNotificationListComponent(
           <Box
@@ -52,7 +52,7 @@ export default function Notifications() {
             <h3 style={{ marginBottom: "1%" }}>You're all caught up!</h3>
             <p>
               You haven't made more progress yet. But remember, discipline
-              equals freedom. Go and <Link href="/">make some progress!</Link>
+              equals freedom. Go and <a href="/">make some progress!</a>
             </p>
           </Box>
         );
@@ -72,6 +72,21 @@ export default function Notifications() {
               Here's a list of your notifications.
             </h3>
             {notifications.map((notification: any, index: number) => {
+              let handleDelete = (i: number) => {
+                let profileI = profileInfo;
+                removeElementAtIndex(profileI.notifications, i);
+
+                updateProfileInfo(profileI)
+                  .then(() => console.log("Successfully deleted"))
+                  .catch((error) => console.error(error));
+
+                setTimeout(() => {
+                  if (typeof window !== "undefined") {
+                    window.location.href = window.location.href; // Trigger full reload
+                  }
+                }, 1000);
+              };
+
               return (
                 <div
                   style={{
@@ -98,6 +113,21 @@ export default function Notifications() {
                     <p>
                       <b>Time:</b> {notification.dateAndTime.time}
                     </p>
+                    <IconButton
+                      onClick={() => {
+                        let sureToDelete = prompt(
+                          "Are you sure you want to delete this notification? This action is irreversible! (y/n)"
+                        );
+                        if (sureToDelete?.toLowerCase() === "y") {
+                          handleDelete(index);
+                        }
+                      }}
+                      color="secondary"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                      Delete Notification
+                    </IconButton>
                   </Box>
                 </div>
               );
@@ -118,7 +148,7 @@ export default function Notifications() {
   return (
     <main>
       <h1>Notifications</h1>
-      <p>Let's see what you've achieved, {username}.</p>
+      <p>Let's see what you've achieved{username}.</p>
       {notificationListComponent}
     </main>
   );

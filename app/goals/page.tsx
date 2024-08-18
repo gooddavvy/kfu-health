@@ -14,7 +14,7 @@ export default function Goals() {
 
   getProfileInfo()
     .then((profileInfo: any) => {
-      setUsername(profileInfo.username);
+      setUsername(", " + profileInfo.username);
     })
     .catch((error) => {
       console.error("Failed to get profile info:", error);
@@ -28,7 +28,7 @@ export default function Goals() {
   return (
     <main>
       <h1>Goal Console</h1>
-      <p>Ready to reach some goals, {username}?</p>
+      <p>Ready to reach some goals{username}?</p>
 
       <section
         style={{
