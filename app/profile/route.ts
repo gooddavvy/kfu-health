@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import * as fs from 'fs';
 import path from 'path';
 
+let isGetRequest = false;
+
 // Function to get profile info
 let GetProfileInfo = (): any => {
     const filePath = path.join(process.cwd(), 'user_info.json'); // Use process.cwd() to refer to the project root
@@ -28,6 +30,10 @@ try {
 
 // Function to write profile info to a file
 let SetProfileInfo = () => {
+    if (isGetRequest) {
+        throw new Error('SetProfileInfo should not be called during a GET request');
+    }
+
     const filePath = path.join(process.cwd(), 'user_info.json'); // Use process.cwd() to refer to the project root
 
     fs.writeFile(filePath, JSON.stringify(profileInfo, null, 2), (err) => {
@@ -42,17 +48,21 @@ let SetProfileInfo = () => {
 
 // GET handler
 export async function GET() {
+    isGetRequest = true;
     try {
         const profileData = GetProfileInfo();
         return NextResponse.json(profileData);
     } catch (error) {
         console.error((error as Error).message);
         return NextResponse.json({ error: 'Failed to retrieve profile information' }, { status: 500 });
+    } finally {
+        isGetRequest = false;
     }
 }
 
 // POST handler
 export async function POST(req: Request) {
+    isGetRequest = false;
     try {
         const body = await req.json();
         profileInfo = { ...profileInfo, ...body };

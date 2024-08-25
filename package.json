@@ -22,6 +22,7 @@
     "bcrypt": "^5.1.1",
     "carbon-components-react": "^8.64.0",
     "cookie": "^0.6.0",
+    "lodash": "^4.17.21",
     "next": "14.0.3",
     "next-auth": "^4.24.7",
     "next-cookie": "^2.8.0",

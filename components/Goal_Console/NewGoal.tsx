@@ -7,10 +7,10 @@ import type { OnChangeData } from "carbon-components-react";
 import { GoalTypes } from "@/utils/goal_types";
 import WeightLoss from "./NewGoal/WeightLoss";
 import MaxPushups from "./NewGoal/MaxPushups";
+import MaxPullups from "./NewGoal/MaxPullups";
 
 const NewGoal: React.FC = ({ sx }: any) => {
   let [goal, setGoal] = useState(null);
-  // let [ready, setReady] = useState(false);
 
   return (
     <Box
@@ -58,6 +58,10 @@ const NewGoal: React.FC = ({ sx }: any) => {
         {goal ===
           "Push-up Training - Target for the maximum number of push-ups." && (
           <MaxPushups />
+        )}
+        {goal ===
+          "Pull-up Training - Target for the maximum number of pull-ups." && (
+          <MaxPullups />
         )}
 
         <h4 style={{ marginTop: "1%" }}>Discipline equals freedom!</h4>

@@ -34,3 +34,23 @@
     visibility: hidden !important;
     height: 0 !important;
 }
+
+/* */
+
+.power-script {
+    position: relative;
+    font-size: 0.6em;
+    vertical-align: top;
+}
+
+.power-script .circle {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0.2em 0.4em;
+    display: inline-block;
+    text-align: center;
+    line-height: 1;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}

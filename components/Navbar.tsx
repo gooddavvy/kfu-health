@@ -14,10 +14,20 @@ import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutButton from "./LogoutButton";
 import NotificationIcon from "./NotificationIcon";
+import { getProfileInfo } from "@/utils/profile_api";
 
 const Navbar: React.FC = ({ sx }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [notifiNum, setNotifiNum] = useState<number>(0);
   const open = Boolean(anchorEl);
+
+  getProfileInfo()
+    .then((profileInfo: any) => {
+      setNotifiNum(profileInfo.notifications.length);
+    })
+    .catch((error) => {
+      console.error("Failed to get profile info:", error);
+    });
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -48,7 +58,12 @@ const Navbar: React.FC = ({ sx }: any) => {
           </Typography>
           <LogoutButton />
           <Link href="/notifications">
-            <NotificationIcon width={20} height={20} />
+            <NotificationIcon width={20} height={20} /> <sup>{notifiNum}</sup>O
+            <sup>
+              <span className="power-script">
+                <span className="circle">{notifiNum}</span>
+              </span>
+            </sup>
           </Link>
 
           <Menu
