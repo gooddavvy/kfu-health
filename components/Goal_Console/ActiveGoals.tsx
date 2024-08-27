@@ -1,6 +1,9 @@
 "use client";
 
+// React
 import React, { useState, useEffect, useRef } from "react";
+
+// Components
 import {
   Box,
   Card,
@@ -9,16 +12,18 @@ import {
   Modal,
   TextField,
   Button as MuiButton,
-  IconButton,
   Typography,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Button as CarbonButton, ProgressBar } from "@carbon/react";
-import { getProfileInfo, updateProfileInfo } from "../../utils/profile_api";
-import { isPastDate } from "./NewGoal/WeightLoss";
-import isNearDeadline from "../../utils/is_near_deadline";
+import { Button as CarbonButton } from "@carbon/react";
+import GoalDetails from "./ActiveGoals/GoalDetails";
 
+// Utils
+import { isPastDate } from "./NewGoal/WeightLoss";
+import { getProfileInfo, updateProfileInfo } from "@/utils/profile_api";
+import isNearDeadline from "@/utils/is_near_deadline";
+import calculateProgress from "@/utils/calculate_progress";
+
+/* Helper code */
 export function removeElementAtIndex<T>(array: T[], index: number): T[] {
   return index > -1 && index < array.length ? array.splice(index, 1) : array;
 }
@@ -28,6 +33,9 @@ export const notify = (message: object, profileI: any) => {
   updateProfileInfo(profileI).catch(console.error);
 };
 
+/*
+ * `ActiveGoals` component
+ */
 const ActiveGoals: React.FC = () => {
   const [box, setBox] = useState<React.ReactNode>(
     <Box>
@@ -37,9 +45,7 @@ const ActiveGoals: React.FC = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [currentGoalIndex, setCurrentGoalIndex] = useState<number | null>(null);
-
   const [currentGoal, setCurrentGoal] = useState<any>(null);
-
   const [editFields, setEditFields] = useState<{
     deadline?: string;
     current?: string;
@@ -47,14 +53,11 @@ const ActiveGoals: React.FC = () => {
   }>({});
   const goalRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  useEffect(() => fetchData(), []);
   const fetchData = () => {
     getProfileInfo()
       .then(updateGoals)
-      .catch(() =>
+      .catch((_) =>
         setBox(
           <Box>
             <p>Something went wrong. Please try again later.</p>
@@ -62,21 +65,6 @@ const ActiveGoals: React.FC = () => {
         )
       );
   };
-
-  const calculateProgress = (
-    initial: number,
-    current: number,
-    target: number
-  ) =>
-    Math.min(
-      Math.max(
-        ((initial > target ? initial - current : current - initial) /
-          Math.abs(target - initial)) *
-          100,
-        0
-      ),
-      100
-    );
 
   const updateGoals = (profileInfo: any) => {
     const activeGoals = profileInfo.goals.filter((goal: any) => goal.active);
@@ -153,7 +141,6 @@ const ActiveGoals: React.FC = () => {
       .catch(console.error);
     closeModals();
   };
-
   const handleDelete = (index: number) => {
     getProfileInfo()
       .then((profileInfo) => {
@@ -186,7 +173,6 @@ const ActiveGoals: React.FC = () => {
     });
     setOpenEditModal(true);
   };
-
   const closeModals = () => {
     setOpenDeleteModal(false);
     setOpenEditModal(false);
@@ -365,166 +351,5 @@ const ActiveGoals: React.FC = () => {
     </Box>
   );
 };
-
-const GoalDetails: React.FC<any> = ({
-  goal,
-  profileInfo,
-  progress,
-  progressColor,
-  failing,
-  deadlineIsNear,
-  onEdit,
-  onDelete,
-}) => {
-  let [errorHasOccurred, setErrorHasOccurred] = useState(false);
-
-  if (progress === 100 && failing === false) {
-    const notification = {
-      message: "You did it! You achieved your goal!",
-      details: `Congratulations, ${profileInfo.username}! You have successfully achieved your ${goal.type} goal!`,
-      dateAndTime: {
-        date: new Date().toLocaleDateString(),
-        time: new Date().toLocaleTimeString(),
-      },
-      goal,
-      colorExpression: "lightgreen",
-    };
-
-    notify(notification, profileInfo);
-  }
-  if (isPastDate(goal.deadline, new Date().toLocaleDateString())) {
-    // This means that today is pass the deadline. Here's the logic.
-    let profileI = profileInfo;
-    profileI.goal_history.push(goal);
-
-    updateProfileInfo(profileI)
-      .then((_) => {
-        console.log("Successfully updated profile info");
-      })
-      .catch((error) => {
-        console.error("Error updating profile info:", error);
-        setErrorHasOccurred(true);
-      });
-
-    if (!errorHasOccurred) {
-      setTimeout(() => {
-        if (typeof window !== "undefined") {
-          window.location.href = window.location.href;
-        }
-      }, 1000);
-    }
-  }
-
-  return (
-    <>
-      <Box
-        style={{
-          textAlign: "center",
-          justifyContent: "center",
-          display: "grid",
-        }}
-      >
-        <p style={{ fontSize: "100%", color: progressColor }}>
-          Progress: {progress.toFixed(2)}% (Progress Level:{" "}
-          {progress < 50 ? "Low" : progress < 75 ? "Medium" : "High"})
-        </p>
-        <ProgressBar label="" value={progress} max={100} status="active" />
-      </Box>
-      {progress === 0 && (
-        <Box sx={{ textAlign: "center", color: "#721c24", marginTop: "5px" }}>
-          <p>No progress made yet</p>
-        </Box>
-      )}
-      {progress === 100 && !failing && (
-        <Box sx={{ textAlign: "center", color: "green", marginTop: "5px" }}>
-          <p>You did it! You achieved your goal! Please delete the goal now.</p>
-        </Box>
-      )}
-      {deadlineIsNear && progress !== 100 && (
-        <Box sx={{ textAlign: "center", fontWeight: "bold", marginTop: "5px" }}>
-          <p>
-            <b>
-              <i>Deadline approaching soon.</i>
-            </b>
-          </p>
-        </Box>
-      )}
-      {failing && (
-        <Box sx={{ textAlign: "center", color: "darkred", marginTop: "5px" }}>
-          <p>Oh no, you failed this goal!</p>
-        </Box>
-      )}
-      <GoalSummary goal={goal} />
-      <Box style={{ marginTop: "2%" }}>
-        <IconButton onClick={onEdit} color="primary">
-          <EditIcon />
-        </IconButton>
-        <IconButton onClick={onDelete} sx={{ color: "#da1e28" }}>
-          <DeleteIcon />
-        </IconButton>
-      </Box>
-    </>
-  );
-};
-
-const GoalSummary: React.FC<any> = ({ goal }) => (
-  <Box>
-    <p>
-      <b>Goal Type:</b> {goal.type}
-    </p>
-    <p>
-      <b>Start Date:</b> {goal.startDate}
-    </p>
-    <p>
-      <b>Current Date:</b> {new Date().toLocaleDateString()}
-    </p>
-    <p>
-      <b>Deadline:</b> {goal.deadline}
-    </p>
-    {goal.initialWeight && goal.currentWeight && goal.targetWeight && (
-      <Box>
-        <p>
-          <b>Initial Weight:</b> {goal.initialWeight} lb
-        </p>
-        <p>
-          <b>Current Weight:</b> {goal.currentWeight} lb
-        </p>
-        <p>
-          <b>Target Weight:</b> {goal.targetWeight} lb
-        </p>
-      </Box>
-    )}
-    {goal.initialMaxPushups &&
-      goal.currentMaxPushups &&
-      goal.targetMaxPushups && (
-        <Box>
-          <p>
-            <b>Initial Maximum Pushups:</b> {goal.initialMaxPushups}
-          </p>
-          <p>
-            <b>Current Maximum Pushups:</b> {goal.currentMaxPushups}
-          </p>
-          <p>
-            <b>Target Maximum Pushups:</b> {goal.targetMaxPushups}
-          </p>
-        </Box>
-      )}
-    {goal.initialMaxPullups &&
-      goal.currentMaxPullups &&
-      goal.targetMaxPullups && (
-        <Box>
-          <p>
-            <b>Initial Maximum Pull-ups:</b> {goal.initialMaxPullups}
-          </p>
-          <p>
-            <b>Current Maximum Pull-ups:</b> {goal.currentMaxPullups}
-          </p>
-          <p>
-            <b>Target Maximum Pull-ups:</b> {goal.targetMaxPullups}
-          </p>
-        </Box>
-      )}
-  </Box>
-);
 
 export default ActiveGoals;

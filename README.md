@@ -76,4 +76,13 @@ npm i
 npm run server
 ```
 
-Remember only to run `npm run server` only once. The next time you run the server, run `npm run dev`. Failure to do so may result in data loss.
+Remember only to run `npm run server` **only once**. The next time you run the server, run `npm run dev`. Failure to do so may result in data loss.
+
+Also, if you don't want to use `npm run server`, run this:
+
+```
+npm run kfu-setup
+npm run dev
+```
+
+Once again, `npm run kfu-setup` should be run **only once**.

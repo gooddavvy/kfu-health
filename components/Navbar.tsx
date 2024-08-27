@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,6 +9,7 @@ import {
   Box,
   Menu,
   MenuItem,
+  CircularProgress,
 } from "@mui/material";
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,18 +17,31 @@ import LogoutButton from "./LogoutButton";
 import NotificationIcon from "./NotificationIcon";
 import { getProfileInfo } from "@/utils/profile_api";
 
-const Navbar: React.FC = ({ sx }: any) => {
+const Navbar: React.FC<any> = ({ sx }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [notifiNum, setNotifiNum] = useState<number>(0);
+  const [totalPoints, setTotalPoints] = useState<
+    number | string | React.ReactNode
+  >(
+    <CircularProgress
+      style={{ color: "#bff", fontSize: "0.875rem !important" }}
+    />
+  );
   const open = Boolean(anchorEl);
 
-  getProfileInfo()
-    .then((profileInfo: any) => {
-      setNotifiNum(profileInfo.notifications.length);
-    })
-    .catch((error) => {
-      console.error("Failed to get profile info:", error);
-    });
+  useEffect(() => {
+    // Define the fetch function inside useEffect
+    const fetchProfileInfo = async () => {
+      try {
+        const profileInfo = await getProfileInfo();
+        setTotalPoints(profileInfo.total_points);
+      } catch (error) {
+        console.error("Failed to get profile info:", error);
+        setTotalPoints("Error");
+      }
+    };
+
+    fetchProfileInfo();
+  }, []); // Empty dependency array ensures this runs once on mount
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -42,7 +56,7 @@ const Navbar: React.FC = ({ sx }: any) => {
       <Box className="ntf-banner green hidden" sx={{ marginTop: "-5px" }}>
         <h4>Affecting</h4>
       </Box>
-      <AppBar style={sx}>
+      <AppBar sx={sx}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -56,14 +70,20 @@ const Navbar: React.FC = ({ sx }: any) => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             KFU Health
           </Typography>
+          <Box
+            sx={{
+              border: "2px solid black",
+              borderRadius: "2px",
+              padding: "6px 16px",
+              fontSize: "0.875rem",
+            }}
+            title={`Total Points Earned: ${totalPoints}`}
+          >
+            {totalPoints}
+          </Box>
           <LogoutButton />
           <Link href="/notifications">
-            <NotificationIcon width={20} height={20} /> <sup>{notifiNum}</sup>O
-            <sup>
-              <span className="power-script">
-                <span className="circle">{notifiNum}</span>
-              </span>
-            </sup>
+            <NotificationIcon width={20} height={20} />
           </Link>
 
           <Menu

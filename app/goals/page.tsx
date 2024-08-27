@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 // import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getProfileInfo } from "@/utils/profile_api";
@@ -11,7 +11,7 @@ import GoalHistory from "@/components/Goal_Console/GoalHistory";
 export default function Goals() {
   //   const cookieStore = cookies();
   //   const authToken = cookieStore.get("auth")?.value;
-  const [username, setUsername] = React.useState("");
+  const [username, setUsername] = useState("");
 
   getProfileInfo()
     .then((profileInfo: any) => {

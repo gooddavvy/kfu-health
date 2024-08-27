@@ -2,14 +2,13 @@
 
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { Dropdown } from "@carbon/react";
-import type { OnChangeData } from "carbon-components-react";
+import { Dropdown, OnChangeData } from "@carbon/react";
 import { GoalTypes } from "@/utils/goal_types";
 import WeightLoss from "./NewGoal/WeightLoss";
 import MaxPushups from "./NewGoal/MaxPushups";
 import MaxPullups from "./NewGoal/MaxPullups";
 
-const NewGoal: React.FC = ({ sx }: any) => {
+const NewGoal: React.FC<any> = ({ sx }: any) => {
   let [goal, setGoal] = useState(null);
 
   return (
@@ -27,6 +26,7 @@ const NewGoal: React.FC = ({ sx }: any) => {
         alignSelf: "center" /* 
         marginLeft: "40%",
         marginRight: "10%", */,
+        ...sx,
       }}
     >
       <h2>Create a Goal</h2>
@@ -34,7 +34,7 @@ const NewGoal: React.FC = ({ sx }: any) => {
         <div>
           <Dropdown
             label="Goal Type"
-            titleText="Goal Type"
+            titleText=""
             id="goal_type"
             selectedItem={goal}
             onChange={({ selectedItem }: OnChangeData<any>) =>

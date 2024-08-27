@@ -1,34 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
-// import { cookies } from "next/headers";
+import React from "react";
+// import { cookies } from "next/headers"; // Should not be uncommented
 import { redirect } from "next/navigation";
 import { getProfileInfo } from "@/utils/profile_api";
-import YourProfile from "@/components/Dashboard/YourProfile";
+import NewWorkout from "@/components/Workout_Tracker/WorkoutLogging";
 
-export default function Home() {
-  /* const cookieStore = cookies();
-  const authToken = cookieStore.get("auth")?.value; */
-
-  const [username, setUsername] = useState<string>("");
+export default function Goals() {
+  //   const cookieStore = cookies();
+  //   const authToken = cookieStore.get("auth")?.value;
+  const [username, setUsername] = React.useState("");
 
   getProfileInfo()
     .then((profileInfo: any) => {
       setUsername(", " + profileInfo.username);
     })
-    .catch((error: any) => {
+    .catch((error) => {
       console.error("Failed to get profile info:", error);
     });
 
   /* if (!authToken) {
     // Redirect to login page if not authenticated
-    // redirect("/auth/login");
-  } */
+    redirect("/auth/login");
+  } */ // Should not be uncommented
 
   return (
     <main>
-      <h1>KFU Health Dashboard</h1>
-      <p>Welcome back{username}.</p>
+      <h1>Workout Tracker</h1>
+      <p>Time for some good workouts{username}.</p>
 
       <section
         style={{
@@ -38,7 +37,7 @@ export default function Home() {
           //   border: "3px solid lightgray",
         }}
       >
-        <YourProfile />
+        <NewWorkout />
       </section>
     </main>
   );
