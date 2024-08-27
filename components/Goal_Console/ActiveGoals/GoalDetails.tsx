@@ -94,17 +94,17 @@ let GoalDetails: React.FC<any> = ({
         <ProgressBar label="" value={progress} max={100} status="active" />
       </Box>
       {progress === 0 && (
-        <Box sx={{ textAlign: "center", color: "#721c24", marginTop: "5px" }}>
+        <Box sx={{ textAlign: "center", color: "#721c24", mt: "5px" }}>
           <p>No progress made yet</p>
         </Box>
       )}
       {progress === 100 && !failing && (
-        <Box sx={{ textAlign: "center", color: "green", marginTop: "5px" }}>
+        <Box sx={{ textAlign: "center", color: "green", mt: "5px" }}>
           <p>You did it! You achieved your goal! Please delete the goal now.</p>
         </Box>
       )}
       {deadlineIsNear && progress !== 100 && (
-        <Box sx={{ textAlign: "center", fontWeight: "bold", marginTop: "5px" }}>
+        <Box sx={{ textAlign: "center", fontWeight: "bold", mt: "5px" }}>
           <p>
             <b>
               <i>Deadline approaching soon.</i>
@@ -113,7 +113,7 @@ let GoalDetails: React.FC<any> = ({
         </Box>
       )}
       {failing && (
-        <Box sx={{ textAlign: "center", color: "darkred", marginTop: "5px" }}>
+        <Box sx={{ textAlign: "center", color: "darkred", mt: "5px" }}>
           <p>Oh no, you failed this goal!</p>
         </Box>
       )}

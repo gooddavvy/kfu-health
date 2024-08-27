@@ -98,9 +98,7 @@ let WeightLoss: React.FC = () => {
             fullWidth
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-            sx={{
-              marginTop: "20px",
-            }}
+            sx={{ mt: "20px" }}
           />
           <TextField
             label="Current weight (lbs)"
@@ -108,9 +106,7 @@ let WeightLoss: React.FC = () => {
             fullWidth
             value={cw}
             onChange={(e) => setCw(e.target.value)}
-            sx={{
-              marginTop: "20px",
-            }}
+            sx={{ mt: "20px" }}
           />
           <CarbonButton
             disabled={selectedDate === null || weight === ""}
@@ -138,10 +134,7 @@ let WeightLoss: React.FC = () => {
           >
             Set Goal
           </CarbonButton>
-          <Typography
-            sx={{ /* color: "gray", */ marginTop: "20px" }}
-            component="h4"
-          >
+          <Typography sx={{ /* color: "gray", */ mt: "20px" }} component="h4">
             <b>Note:</b> If today is past the deadline you choose, this goal
             will not be added to the Active Goals list.
           </Typography>

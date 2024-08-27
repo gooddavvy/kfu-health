@@ -18,7 +18,7 @@ const NewGoal: React.FC<any> = ({ sx }: any) => {
         border: "3px solid",
         borderRadius: "5px !important",
         borderWidth: "2px !important",
-        marginTop: "1%",
+        mt: "1%",
         maxWidth: 345,
         minWidth: 435,
         alignItems: "center",

@@ -10,7 +10,7 @@ import { getProfileInfo } from "@/utils/profile_api";
 
 export default function GoalHistory(): React.ReactNode {
   let [box, setBox] = useState<React.ReactNode>(
-    <Box sx={{ marginTop: "3% !important" }}>
+    <Box sx={{ mt: "3% !important" }}>
       <CircularProgress style={{ color: "#007bff" }} />
     </Box>
   );
@@ -19,7 +19,7 @@ export default function GoalHistory(): React.ReactNode {
 
   useEffect(() => {
     setBox(
-      <Box sx={{ marginTop: "3% !important" }}>
+      <Box sx={{ mt: "3% !important" }}>
         <CircularProgress style={{ color: "#007bff" }} />
       </Box>
     );
@@ -45,7 +45,7 @@ export default function GoalHistory(): React.ReactNode {
           setFilteredGoals([]);
 
           setBox(
-            <Box sx={{ marginTop: "3% !important" }}>
+            <Box sx={{ mt: "3% !important" }}>
               <p>Something went wrong. Please try again as soon as possible.</p>
             </Box>
           );
@@ -57,7 +57,7 @@ export default function GoalHistory(): React.ReactNode {
 
   useEffect(() => {
     setBox(
-      <Box sx={{ marginTop: "3% !important" }}>
+      <Box sx={{ mt: "3% !important" }}>
         {filteredGoals.length > 0 ? (
           filteredGoals.map((goal: any, index: number) => {
             return (
@@ -123,7 +123,7 @@ export default function GoalHistory(): React.ReactNode {
         border: "3px solid blue",
         borderRadius: "5px",
         borderWidth: "2px",
-        marginTop: "1%",
+        mt: "1%",
       }}
     >
       <Card variant="outlined">
@@ -135,7 +135,7 @@ export default function GoalHistory(): React.ReactNode {
             fullWidth
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            sx={{ marginBottom: "15px" }}
+            sx={{ mb: "15px" }}
           />
           {searchQuery.length > 0 && filteredGoals.length > 0 && (
             <p>

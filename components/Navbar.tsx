@@ -53,7 +53,7 @@ const Navbar: React.FC<any> = ({ sx }: any) => {
 
   return (
     <Box position="fixed">
-      <Box className="ntf-banner green hidden" sx={{ marginTop: "-5px" }}>
+      <Box className="ntf-banner green hidden" sx={{ mt: "-5px" }}>
         <h4>Affecting</h4>
       </Box>
       <AppBar sx={sx}>

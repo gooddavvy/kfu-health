@@ -98,9 +98,7 @@ let MaxPushups: React.FC = () => {
             fullWidth
             value={max}
             onChange={(e) => setMax(e.target.value)}
-            sx={{
-              marginTop: "20px",
-            }}
+            sx={{ mt: "20px" }}
           />
           <TextField
             label="Current maximum pushup value"
@@ -108,9 +106,7 @@ let MaxPushups: React.FC = () => {
             fullWidth
             value={cmp}
             onChange={(e) => setCmp(e.target.value)}
-            sx={{
-              marginTop: "20px",
-            }}
+            sx={{ mt: "20px" }}
           />
           <CarbonButton
             disabled={selectedDate === null || max === ""}

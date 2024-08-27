@@ -98,9 +98,7 @@ let MaxPullups: React.FC = () => {
             fullWidth
             value={max}
             onChange={(e) => setMax(e.target.value)}
-            sx={{
-              marginTop: "20px",
-            }}
+            sx={{ mt: "20px" }}
           />
           <TextField
             label="Current maximum pull-up value"
@@ -108,9 +106,7 @@ let MaxPullups: React.FC = () => {
             fullWidth
             value={cmp}
             onChange={(e) => setCmp(e.target.value)}
-            sx={{
-              marginTop: "20px",
-            }}
+            sx={{ mt: "20px" }}
           />
           <CarbonButton
             disabled={selectedDate === null || max === ""}
@@ -138,10 +134,7 @@ let MaxPullups: React.FC = () => {
           >
             Set Goal
           </CarbonButton>
-          <Typography
-            sx={{ /* color: "gray", */ marginTop: "20px" }}
-            component="h4"
-          >
+          <Typography sx={{ /* color: "gray", */ mt: "20px" }} component="h4">
             <b>Note:</b> If today is past the deadline you choose, this goal
             will not be added to the Active Goals list.
           </Typography>

@@ -190,7 +190,7 @@ const ActiveGoals: React.FC = () => {
         border: "3px solid red",
         borderRadius: "5px",
         borderWidth: "2px",
-        marginTop: "1%",
+        mt: "1%",
       }}
     >
       <Card variant="outlined">
@@ -225,11 +225,7 @@ const ActiveGoals: React.FC = () => {
             irreversible!
           </p>
 
-          <Box
-            sx={{
-              marginTop: "20px",
-            }}
-          >
+          <Box sx={{ mt: "20px" }}>
             <CarbonButton
               onClick={() => handleDelete(currentGoalIndex!)}
               kind="danger"
@@ -240,7 +236,7 @@ const ActiveGoals: React.FC = () => {
               onClick={closeModals}
               variant="text"
               sx={{
-                marginTop: 0.5,
+                mt: 0.5,
                 borderBottom: "1px solid transparent",
                 "&:hover": { borderBottom: "1px solid" },
                 "&:focus": { borderBottom: "1px solid" },
@@ -322,11 +318,7 @@ const ActiveGoals: React.FC = () => {
             }
           />
 
-          <Box
-            sx={{
-              marginTop: "20px",
-            }}
-          >
+          <Box sx={{ mt: "20px" }}>
             <CarbonButton
               onClick={() => handleEdit(currentGoalIndex!)}
               kind="primary"
@@ -337,7 +329,7 @@ const ActiveGoals: React.FC = () => {
               onClick={closeModals}
               variant="text"
               sx={{
-                marginTop: 0.5,
+                mt: 0.5,
                 borderBottom: "1px solid transparent",
                 "&:hover": { borderBottom: "1px solid" },
                 "&:focus": { borderBottom: "1px solid" },

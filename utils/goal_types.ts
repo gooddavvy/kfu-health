@@ -1,7 +1,7 @@
 export let GoalTypes: string[] = [
     "Weight Loss - Target weight to reach by a specific date.",
-    "Running - Goal to run a certain distance within a specific number of minutes.",
-    "Weight Training - Target for weightlifting.",
+    // "Running - Goal to run a certain distance within a specific number of minutes.",
+    // "Weight Training - Target for weightlifting.",
     "Push-up Training - Target for the maximum number of push-ups.",
     "Pull-up Training - Target for the maximum number of pull-ups."
 ];
