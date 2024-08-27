@@ -4,7 +4,7 @@ KFU Health (commonly known as KFU, which stands for _Keep Fit Up!_) is a compreh
 
 As you make progress, KFU rewards you with points that are added to your dashboard. Additionally, by completing special fitness and health challenges, you can earn various trophies to celebrate your achievements!
 
-But don't forget, the project is still in progress. Also, it uses NextJS, TypeScript, Material UI, and the Carbon Design System, as well as some fake user profile credentials for now.
+But don't forget, the complex project is still in progress; and it may never end - even if it gets moved to a new repo, or gets acquired by a software company, even if a new type of coding is invented, or if any app beats or aims to beat it, etc., it may never end (it was not built to end). Also, it uses NextJS, TypeScript, Material UI, and the Carbon Design System, as well as some fake user profile credentials for now.
 
 # Pages
 
