@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import { getProfileInfo } from "@/utils/profile_api";
+import ErrorMessage from "../ErrorMessage";
 
 export default function GoalHistory(): React.ReactNode {
   let [box, setBox] = useState<React.ReactNode>(
@@ -44,11 +45,7 @@ export default function GoalHistory(): React.ReactNode {
           console.error("Error fetching profile info:", error);
           setFilteredGoals([]);
 
-          setBox(
-            <Box sx={{ mt: "3% !important" }}>
-              <p>Something went wrong. Please try again as soon as possible.</p>
-            </Box>
-          );
+          setBox(<ErrorMessage error={error} />);
         });
     }, 300);
 

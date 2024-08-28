@@ -7,11 +7,13 @@ import { getProfileInfo } from "@/utils/profile_api";
 import NewGoal from "@/components/Goal_Console/NewGoal";
 import ActiveGoals from "@/components/Goal_Console/ActiveGoals";
 import GoalHistory from "@/components/Goal_Console/GoalHistory";
+import ErrorMessage from "@/components/ErrorMessage";
 
 export default function Goals() {
   //   const cookieStore = cookies();
   //   const authToken = cookieStore.get("auth")?.value;
   const [username, setUsername] = useState("");
+  const [error, setError] = useState<Error | null>(null);
 
   getProfileInfo()
     .then((profileInfo: any) => {
@@ -19,6 +21,7 @@ export default function Goals() {
     })
     .catch((error) => {
       console.error("Failed to get profile info:", error);
+      setError(error);
     });
 
   /* if (!authToken) {
@@ -30,6 +33,7 @@ export default function Goals() {
     <main>
       <h1>Goal Console</h1>
       <p>Ready to reach some goals{username}?</p>
+      {error && <ErrorMessage error={error} />}
 
       <section
         style={{

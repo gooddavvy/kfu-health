@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Box, IconButton, CircularProgress } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { getProfileInfo } from "@/utils/profile_api";
+import ErrorMessage from "../ErrorMessage";
 
 const YourProfile: React.FC<any> = ({ sx }: any) => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const YourProfile: React.FC<any> = ({ sx }: any) => {
                 <b style={{ fontWeight: "bold !important" }}>
                   Total Points Earned:
                 </b>{" "}
-                {profileInfo.total_points}
+                {profileInfo.awards.total_points}
               </p>
             </Box>
             <Box>
@@ -48,14 +49,7 @@ const YourProfile: React.FC<any> = ({ sx }: any) => {
       })
       .catch((error) => {
         console.error("Error getting profile:", error);
-        setInfoBox(
-          <Box>
-            <p style={{ color: "red" }}>
-              Sorry, something went wrong. Please try again asap. Thank you for
-              your patience, and we apologize for any inconvenience.
-            </p>
-          </Box>
-        );
+        setInfoBox(<ErrorMessage error={error} />);
       });
   }, []);
 

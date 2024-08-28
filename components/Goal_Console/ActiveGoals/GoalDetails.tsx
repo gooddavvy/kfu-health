@@ -7,6 +7,7 @@ import { isPastDate } from ".././NewGoal/WeightLoss";
 import { notify } from "../ActiveGoals";
 import GoalSummary from "./GoalSummary";
 import { updateProfileInfo } from "@/utils/profile_api";
+import ErrorMessage from "@/components/ErrorMessage";
 
 let GoalDetails: React.FC<any> = ({
   goal,
@@ -18,7 +19,8 @@ let GoalDetails: React.FC<any> = ({
   onEdit,
   onDelete,
 }) => {
-  let [errorHasOccurred, setErrorHasOccurred] = useState(false);
+  let [errorHasOccurred, setErrorHasOccurred] = useState<boolean>(false);
+  let [error, setError] = useState<Error | null>(null);
 
   const [profileUpdated, setProfileUpdated] = useState(false);
 
@@ -36,10 +38,21 @@ let GoalDetails: React.FC<any> = ({
         goal,
         colorExpression: "lightgreen",
       };
+      const trophy = {
+        type: `${goal.type} Goal Achievement`,
+        reasonEarned: `${goal.type} goal was successfully achieved.`,
+        unique: false,
+        resource: {
+          type: `Goal`,
+          value: goal,
+        },
+      };
 
       notify(notification, profileInfo);
 
-      profileI.total_points += addedPoints;
+      profileI.awards.total_points += addedPoints;
+      profileI.awards.trophies.push(trophy);
+
       updateProfileInfo(profileI)
         .then(() => {
           console.log("Successfully added points to profile");
@@ -48,6 +61,7 @@ let GoalDetails: React.FC<any> = ({
         .catch((error) => {
           console.error("Error updating profile info:", error);
           setErrorHasOccurred(true);
+          setError(error);
         });
     }
   }, [progress, failing, profileInfo, goal, profileUpdated]);
@@ -64,6 +78,7 @@ let GoalDetails: React.FC<any> = ({
         .catch((error) => {
           console.error("Error updating profile info:", error);
           setErrorHasOccurred(true);
+          setError(error);
         });
     }
   }, [goal, profileInfo]);
@@ -117,6 +132,7 @@ let GoalDetails: React.FC<any> = ({
           <p>Oh no, you failed this goal!</p>
         </Box>
       )}
+      {errorHasOccurred && <ErrorMessage error={error as Error} />}
       <GoalSummary goal={goal} />
       <Box style={{ marginTop: "2%" }}>
         <IconButton onClick={onEdit} color="primary">

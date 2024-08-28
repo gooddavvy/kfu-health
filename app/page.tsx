@@ -7,19 +7,22 @@ import { getProfileInfo } from "@/utils/profile_api";
 import YourProfile from "@/components/Dashboard/YourProfile";
 import QuoteComponent from "@/components/QuoteComponent";
 import { GenerateQuote } from "@/utils/quote_manager";
+import ErrorMessage from "@/components/ErrorMessage";
 
 export default function Home() {
   /* const cookieStore = cookies();
   const authToken = cookieStore.get("auth")?.value; */
 
   const [username, setUsername] = useState<string>("");
+  const [error, setError] = useState<Error | null>(null);
 
   getProfileInfo()
     .then((profileInfo: any) => {
       setUsername(", " + profileInfo.username);
     })
-    .catch((error: any) => {
+    .catch((error: Error) => {
       console.error("Failed to get profile info:", error);
+      setError(error);
     });
 
   /* if (!authToken) {
@@ -32,6 +35,7 @@ export default function Home() {
       <h1>KFU Health Dashboard</h1>
       <p>Welcome back{username}.</p>
       <QuoteComponent quote={GenerateQuote()} />
+      {error && <ErrorMessage error={error} />}
 
       <section
         style={{

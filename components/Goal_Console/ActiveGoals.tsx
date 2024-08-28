@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { Button as CarbonButton } from "@carbon/react";
 import GoalDetails from "./ActiveGoals/GoalDetails";
+import ErrorMessage from "../ErrorMessage";
 
 // Utils
 import { isPastDate } from "./NewGoal/WeightLoss";
@@ -57,13 +58,7 @@ const ActiveGoals: React.FC = () => {
   const fetchData = () => {
     getProfileInfo()
       .then(updateGoals)
-      .catch((_) =>
-        setBox(
-          <Box>
-            <p>Something went wrong. Please try again later.</p>
-          </Box>
-        )
-      );
+      .catch((error) => setBox(<ErrorMessage error={error} />));
   };
 
   const updateGoals = (profileInfo: any) => {

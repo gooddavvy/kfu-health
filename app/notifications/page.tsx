@@ -13,6 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { getProfileInfo, updateProfileInfo } from "@/utils/profile_api";
 import { removeElementAtIndex } from "@/components/Goal_Console/ActiveGoals";
 import GoalInfo from "./GoalInfo";
+import ErrorMessage from "@/components/ErrorMessage";
 
 const Notifications: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -20,6 +21,7 @@ const Notifications: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     getProfileInfo()
@@ -31,6 +33,7 @@ const Notifications: React.FC = () => {
       .catch((error) => {
         console.error("Failed to get profile info:", error);
         setLoading(false);
+        setError(error);
       });
   }, []);
 
@@ -50,7 +53,10 @@ const Notifications: React.FC = () => {
         setOpenModal(false); // Close the modal after deletion
         setDeleteIndex(null); // Reset the index
       })
-      .catch((error) => console.error("Error deleting notification:", error));
+      .catch((error) => {
+        console.error("Error deleting notification:", error);
+        setError(error);
+      });
   };
 
   const handleOpenModal = (index: number) => {
@@ -116,6 +122,7 @@ const Notifications: React.FC = () => {
         <h3 style={{ marginBottom: "1%" }}>
           Here's a list of your notifications.
         </h3>
+        <ErrorMessage error={error as Error} />
         {notifications.map((notification: any, index: number) => (
           <div
             style={{
