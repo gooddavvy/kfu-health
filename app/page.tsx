@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { redirect } from "next/navigation";
 import { getProfileInfo } from "@/utils/profile_api";
 import YourProfile from "@/components/Dashboard/YourProfile";
+import QuoteComponent from "@/components/QuoteComponent";
+import { GenerateQuote } from "@/utils/quote_manager";
 
 export default function Home() {
   /* const cookieStore = cookies();
@@ -29,6 +31,7 @@ export default function Home() {
     <main>
       <h1>KFU Health Dashboard</h1>
       <p>Welcome back{username}.</p>
+      <QuoteComponent quote={GenerateQuote()} />
 
       <section
         style={{
