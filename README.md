@@ -86,3 +86,16 @@ npm run dev
 ```
 
 Once again, `npm run kfu-setup` should be run **only once**.
+
+# Contributions, Stars, and More
+
+We believe that if you give this project **one** (yes, 1) run, you will admit that despite the ongoing, in-progress, low-security, slightly-rough nature of this product, this will be one of the world's most useful fitness trackers in the entire world.
+
+And that's one of the reasons we're looking for two major things on GitHub: **Stars and Contributions**.
+
+1. **Stars:** If you like this app upon the single run, please go ahead and star it. Why not, after all?
+2. **Contributions:** If you see several issues in the app you believe you can solve, who says you can't contribute?
+
+Thank you very much, community, for supporting one of the largest projects I have ever developed, and possibly one of the largest projects I've ever seen on GitHub. Once again:
+
+###### Thank you! Mahalo! Merci!
