@@ -32,7 +32,7 @@ const YourProfile: React.FC<any> = ({ sx }: any) => {
                 <b style={{ fontWeight: "bold !important" }}>
                   Total Points Earned:
                 </b>{" "}
-                {profileInfo.awards.total_points}
+                {(profileInfo.awards.total_points as number).toLocaleString()}
               </p>
             </Box>
             <Box>

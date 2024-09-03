@@ -32,7 +32,9 @@ const Navbar: React.FC<any> = ({ sx }: any) => {
     const fetchProfileInfo = async () => {
       try {
         const profileInfo = await getProfileInfo();
-        setTotalPoints(profileInfo.awards.total_points);
+        setTotalPoints(
+          (profileInfo.awards.total_points as number).toLocaleString()
+        );
       } catch (error) {
         console.error("Failed to get profile info:", error);
         setTotalPoints("Error");
@@ -94,9 +96,7 @@ const Navbar: React.FC<any> = ({ sx }: any) => {
               }}
               title={`Total Points Earned: ${totalPoints}`}
             >
-              {typeof totalPoints === "number"
-                ? (totalPoints as number).toLocaleString()
-                : totalPoints}
+              {typeof totalPoints === "number" ? totalPoints : totalPoints}
             </Box>
 
             <LogoutButton />

@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import ErrorMessage from "../ErrorMessage";
+import GoalHistory from "../Goal_Console/GoalHistory";
 import Trophies from "./Achievements/Trophies";
 
 // Utils
@@ -43,6 +44,12 @@ const Achievements: React.FC = () => {
       .then((info) => {
         setBox(
           <Box>
+            <Box>
+              <p>
+                Total Points Earned:{" "}
+                {(info.awards.total_points as number).toLocaleString()}
+              </p>
+            </Box>
             <Box
               sx={{
                 border: "1px solid #007bff",
@@ -50,6 +57,9 @@ const Achievements: React.FC = () => {
             >
               <h2 style={{ textAlign: "center" }}>Trophies</h2>
               <Trophies profileInfo={info} />
+            </Box>
+            <Box>
+              <GoalHistory achievedOnly />
             </Box>
           </Box>
         );
@@ -75,7 +85,7 @@ const Achievements: React.FC = () => {
     >
       <Card variant="outlined">
         <CardContent>
-          <h2>Current Achievements</h2>
+          <h2>Accomplished Achievements</h2>
           <p style={{ marginBottom: "3%" }}>
             Not seeing up-to-date information? Please try refreshing the page.
           </p>

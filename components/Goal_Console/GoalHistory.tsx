@@ -9,7 +9,11 @@ import {
 import { getProfileInfo } from "@/utils/profile_api";
 import ErrorMessage from "../ErrorMessage";
 
-export default function GoalHistory(): React.ReactNode {
+export default function GoalHistory({
+  achievedOnly = false,
+}: {
+  achievedOnly?: boolean | undefined;
+}): React.ReactNode {
   let [box, setBox] = useState<React.ReactNode>(
     <Box sx={{ mt: "3% !important" }}>
       <CircularProgress style={{ color: "#007bff" }} />
@@ -17,6 +21,7 @@ export default function GoalHistory(): React.ReactNode {
   );
   let [searchQuery, setSearchQuery] = useState<string>("");
   let [filteredGoals, setFilteredGoals] = useState<any[]>([]);
+  let [historyHidden, setHistoryHidden] = useState<boolean>(false);
 
   useEffect(() => {
     setBox(
@@ -56,50 +61,55 @@ export default function GoalHistory(): React.ReactNode {
     setBox(
       <Box sx={{ mt: "3% !important" }}>
         {filteredGoals.length > 0 ? (
-          filteredGoals.map((goal: any, index: number) => {
-            return (
-              <div
-                key={index}
-                style={{
-                  border: "1.5px dashed",
-                  borderRadius: "12px",
-                  padding: "10px",
-                  margin: "10px 0",
-                }}
-              >
-                <p>
-                  <b>Goal Type:</b> {goal.type}
-                </p>
-                {goal.achieved ? (
+          filteredGoals
+            .filter((goal) => !achievedOnly || goal.achieved) // Add filter condition
+            .map((goal: any, index: number) => {
+              return (
+                <div
+                  key={index}
+                  style={{
+                    border: "1.5px dashed",
+                    borderRadius: "12px",
+                    padding: "10px",
+                    margin: "10px 0",
+                    visibility: historyHidden ? "hidden" : "visible",
+                  }}
+                >
                   <p>
-                    <b>✅ Goal Achieved</b>
+                    <b>Goal Type:</b> {goal.type}
                   </p>
-                ) : (
+                  {goal.achieved ? (
+                    <p>
+                      <b>✅ Goal Achieved</b>
+                    </p>
+                  ) : !achievedOnly ? (
+                    <p>
+                      <b>❌ Goal Missed</b>
+                    </p>
+                  ) : (
+                    <div />
+                  )}
                   <p>
-                    <b>❌ Goal Missed</b>
+                    <b>Start Date:</b> {goal.startDate}
                   </p>
-                )}
-                <p>
-                  <b>Start Date:</b> {goal.startDate}
-                </p>
-                <p>
-                  <b>Deadline:</b> {goal.deadline}
-                </p>
-                <p>
-                  <b>Initial Value:</b>{" "}
-                  {goal.initialWeight ||
-                    goal.initialMaxPushups ||
-                    goal.initialMaxPullups}
-                </p>
-                <p>
-                  <b>Target Value:</b>{" "}
-                  {goal.targetWeight ||
-                    goal.targetMaxPushups ||
-                    goal.targetMaxPullups}
-                </p>
-              </div>
-            );
-          })
+                  <p>
+                    <b>Deadline:</b> {goal.deadline}
+                  </p>
+                  <p>
+                    <b>Initial Value:</b>{" "}
+                    {goal.initialWeight ||
+                      goal.initialMaxPushups ||
+                      goal.initialMaxPullups}
+                  </p>
+                  <p>
+                    <b>Target Value:</b>{" "}
+                    {goal.targetWeight ||
+                      goal.targetMaxPushups ||
+                      goal.targetMaxPullups}
+                  </p>
+                </div>
+              );
+            })
         ) : (
           <p>
             No goals match your search. Please search by goal type, start date,
@@ -108,7 +118,7 @@ export default function GoalHistory(): React.ReactNode {
         )}
       </Box>
     );
-  }, [filteredGoals]);
+  }, [filteredGoals, achievedOnly, historyHidden]); // Add achievedOnly to dependencies
 
   return (
     <Box
@@ -126,6 +136,11 @@ export default function GoalHistory(): React.ReactNode {
       <Card variant="outlined">
         <CardContent>
           <h2>Goal History</h2>
+          {achievedOnly && (
+            <p style={{ marginBottom: "3px", marginTop: "3px" }}>
+              Note: This shows achieved goals only.
+            </p>
+          )}
           <TextField
             variant="outlined"
             label="🔎 Search Goals"
