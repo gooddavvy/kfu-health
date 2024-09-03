@@ -38,20 +38,26 @@ let GoalDetails: React.FC<any> = ({
         goal,
         colorExpression: "lightgreen",
       };
-      const trophy = {
-        type: `${goal.type} Goal Achievement`,
-        reasonEarned: `${goal.type} goal was successfully achieved.`,
-        unique: false,
-        resource: {
-          type: `Goal`,
-          value: goal,
-        },
+      const defineTrophy = () => {
+        return {
+          type: `${goal.type} Goal Achievement`,
+          reasonEarned: `${goal.type} goal was successfully achieved.`,
+          unique: false,
+          dateAndTimeEarned: {
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+          },
+          resource: {
+            type: `Goal`,
+            value: goal,
+          },
+        };
       };
 
       notify(notification, profileInfo);
 
       profileI.awards.total_points += addedPoints;
-      profileI.awards.trophies.push(trophy);
+      profileI.awards.trophies.push(defineTrophy());
 
       updateProfileInfo(profileI)
         .then(() => {

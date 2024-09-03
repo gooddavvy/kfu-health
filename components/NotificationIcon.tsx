@@ -3,17 +3,19 @@ import React from "react";
 interface NotificationIconProps {
   width?: number;
   height?: number;
+  style?: React.CSSProperties;
 }
 
 const NotificationIcon: React.FC<NotificationIconProps> = ({
   width = 24,
   height = 24,
+  style = {},
 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={width}
     height={height}
-    style={{ marginTop: "20%", marginLeft: "50%" }}
+    style={{ marginTop: "20%", marginLeft: "50%", ...style }}
     viewBox="0 0 24 24"
     fill="none"
     stroke="white"

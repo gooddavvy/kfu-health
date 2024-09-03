@@ -1,3 +1,5 @@
+> Soon, this project will be moved to [github.com/gooddavvy/kfu-labs](https://github.com/gooddavvy/kfu-labs). It will be the Phase 2 of the project, and will use TailwindCSS alongside other UI tools.
+
 # Overview
 
 KFU Health (commonly known as KFU, which stands for _Keep Fit Up!_) is a comprehensive fitness tracker designed to help you reach your health and fitness goals. It not only monitors your progress towards these goals but also provides estimates of your overall health and fitness through visual aids like pie charts or graphs.

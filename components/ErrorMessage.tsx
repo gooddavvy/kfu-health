@@ -42,69 +42,77 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <Modal
-      open={true} /* The modal cannot be closed */
-      onClose={void 0}
-      aria-labelledby="error-modal-title"
-      aria-describedby="error-modal-description"
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Box
-        sx={{
-          width: 400,
-          bgcolor: "background.paper",
-          borderRadius: 2,
-          boxShadow: 24,
-          p: 4,
-          textAlign: "center",
-        }}
-      >
-        {/* SVG Icon */}
-        <Box
+    <>
+      {error !== null && (
+        <Modal
+          open={true} /* The modal cannot be closed */
+          onClose={void 0}
+          aria-labelledby="error-modal-title"
+          aria-describedby="error-modal-description"
           sx={{
             display: "flex",
+            alignItems: "center",
             justifyContent: "center",
-            mb: 2,
           }}
         >
-          <SvgComponent />
-        </Box>
-
-        {/* Error message */}
-        <Box>
-          <Typography variant="h6" component="h2" gutterBottom>
-            Whoops, something went wrong.
-          </Typography>
-          <Typography variant="body1">
-            We ran into an unexpected issue. Please try again as soon as
-            possible, and we apologize for any inconvenience.
-          </Typography>
-        </Box>
-
-        {/* Collapsible for developer message */}
-        <Box sx={{ textAlign: "left" }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="body1">View developer message</Typography>
-            <IconButton
-              onClick={() => setOpen(!open)}
-              aria-expanded={open}
-              aria-label="show more"
+          <Box
+            sx={{
+              width: 400,
+              bgcolor: "background.paper",
+              borderRadius: 2,
+              boxShadow: 24,
+              p: 4,
+              textAlign: "center",
+            }}
+          >
+            {/* SVG Icon */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mb: 2,
+              }}
             >
-              <ExpandMoreIcon />
-            </IconButton>
+              <SvgComponent />
+            </Box>
+
+            {/* Error message */}
+            <Box>
+              <Typography variant="h6" component="h2" gutterBottom>
+                Whoops, something went wrong.
+              </Typography>
+              <Typography variant="body1">
+                We ran into an unexpected issue. Please try again as soon as
+                possible, and we apologize for any inconvenience.
+              </Typography>
+            </Box>
+
+            {/* Collapsible for developer message */}
+            <Box sx={{ textAlign: "left" }}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="body1">View developer message</Typography>
+                <IconButton
+                  onClick={() => setOpen(!open)}
+                  aria-expanded={open}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </Box>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{ mt: 1 }}
+                >
+                  {error.message}
+                </Typography>
+              </Collapse>
+            </Box>
           </Box>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-              {error.message}
-            </Typography>
-          </Collapse>
-        </Box>
-      </Box>
-    </Modal>
+        </Modal>
+      )}
+    </>
   );
 };
 

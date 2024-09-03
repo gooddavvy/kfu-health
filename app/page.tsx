@@ -3,12 +3,18 @@
 import React, { useState } from "react";
 // import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
+/* Util imports */
 import { getProfileInfo } from "@/utils/profile_api";
-import YourProfile from "@/components/Dashboard/YourProfile";
-import QuoteComponent from "@/components/QuoteComponent";
 import { GenerateQuote } from "@/utils/quote_manager";
+
+/* Component imports */
+import YourProfile from "@/components/Dashboard/YourProfile";
+import Achievements from "@/components/Dashboard/Achievements";
+import QuoteComponent from "@/components/QuoteComponent";
 import ErrorMessage from "@/components/ErrorMessage";
 
+/* Component */
 export default function Home() {
   /* const cookieStore = cookies();
   const authToken = cookieStore.get("auth")?.value; */
@@ -46,6 +52,16 @@ export default function Home() {
         }}
       >
         <YourProfile />
+      </section>
+      <section
+        style={{
+          justifyContent: "center",
+          //   textAlign: "center",
+          borderBottom: "100px",
+          //   border: "3px solid lightgray",
+        }}
+      >
+        <Achievements />
       </section>
     </main>
   );

@@ -15,22 +15,23 @@ export default function LogoutButton() {
   return (
     <Button
       onClick={handleLogout}
-      style={{
-        justifyContent: "center !important",
-        width: "10%",
-        marginLeft: "50px !important",
-        backgroundColor: "red",
+      sx={{
+        justifyContent: "center",
+        padding: "10px 24px",
+        marginLeft: "20px", // Adjusted margin for better spacing
+        background: "linear-gradient(135deg, #ff4081, #ff1744)", // Gradient similar to the total points rectangle
+        color: "#fff", // White text for contrast
+        borderRadius: "12px", // Rounded corners
+        fontWeight: "bold", // Bold text to match the total points
+        boxShadow: "0 4px 10px rgba(255, 23, 68, 0.3)", // Subtle shadow for depth
+        transition: "background 0.3s ease, transform 0.3s ease", // Smooth transitions for hover effect
+        "&:hover": {
+          background: "linear-gradient(135deg, #ff1744, #ff4081)", // Reverse gradient on hover
+          transform: "scale(1.05)", // Slight scale up on hover for interactivity
+        },
       }}
     >
-      <span
-        style={{
-          justifySelf: "center !important",
-          marginLeft: "10px !important",
-          marginRight: "10px !important",
-        }}
-      >
-        Logout
-      </span>
+      Logout
     </Button>
   );
 }
