@@ -71,7 +71,7 @@ The Notifications page keeps users informed about their fitness journey with tim
 
 First, download the latest version of [NodeJS](http://nodejs.org/). Then run in your terminal:
 
-```
+```bash
 git clone https://github.com/gooddavvy/kfu-health.git
 cd kfu-health
 npm i
@@ -82,9 +82,10 @@ Remember only to run `npm run server` **only once**. The next time you run the s
 
 Also, if you don't want to use `npm run server`, run this:
 
-```
+```bash
 npm run kfu-setup
-npm run dev
+$env:PORT=4000; npm run dev # On windows
+PORT=4000 npm run dev # On Unix-based systems
 ```
 
 Once again, `npm run kfu-setup` should be run **only once**.

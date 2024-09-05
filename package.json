@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "kfu-setup": "node create_db.js",
-    "server": "npm run kfu-setup && npm run dev",
+    "server": "npm run kfu-setup && $env:PORT=4000; npm run dev",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
